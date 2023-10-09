@@ -1,28 +1,39 @@
 ﻿import React, { Component } from 'react';
 import { Icon, Menu, Table } from 'semantic-ui-react'
-import {CreateSale } from './CreateSale'
+import { CreateSale } from './CreateSale'
+import {EditSale } from './EditSale'
+import {DeleteSale } from './DeleteSale'
 
 export class SalesList extends Component {
     constructor() {
         super();
         this.state = {
             sales: []
-
+           
         }
-    }
-    
 
+       
+
+    }
+
+   
     componentDidMount() {
         this.populateSalesData();
     }
 
+    componentDidUpdate() {
+        this.populateSalesData();
+    }
 
 
     static renderSalesTable(sales) {
+        
+       
 
         return (
             <div>
-                <CreateSale />
+               
+               <CreateSale />
                 <Table celled>
                     <Table.Header>
                         <Table.Row>
@@ -44,6 +55,8 @@ export class SalesList extends Component {
                                 <Table.Cell>{sale.product.name}</Table.Cell>
                                 <Table.Cell>{sale.store.name}</Table.Cell>
                                 <Table.Cell>{new Date(sale.dateSold).toLocaleString()}</Table.Cell>
+                                <Table.Cell><EditSale  /> </Table.Cell>
+                                <Table.Cell><DeleteSale /></Table.Cell>
                             </Table.Row>
 
 
@@ -96,5 +109,6 @@ export class SalesList extends Component {
         
         this.setState({ sales: data });
     }
+
 
 }

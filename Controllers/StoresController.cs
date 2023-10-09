@@ -28,7 +28,9 @@ namespace MVPOnboarding.Controllers
           {
               return NotFound();
           }
-            return await _context.Stores.ToListAsync();
+            var stores = await _context.Stores.ToListAsync();
+
+            return new JsonResult(stores);
         }
 
         // GET: api/Stores/5

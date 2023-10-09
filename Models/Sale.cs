@@ -14,8 +14,7 @@ public partial class Sale
 
     public int? StoreId { get; set; }
 
-    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
-    [DataType(DataType.Date)]
+    
     public DateTime? DateSold { get; set; }
 
     public virtual Customer? Customer { get; set; }
