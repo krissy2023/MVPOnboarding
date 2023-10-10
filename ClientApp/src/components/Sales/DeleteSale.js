@@ -1,5 +1,8 @@
 ﻿import React, { Component } from "react";
-import { Button, Header, Modal, Form, Icon } from 'semantic-ui-react'
+import { Button, Header, Modal, Form} from 'semantic-ui-react'
+
+
+
 
 
 
@@ -8,8 +11,20 @@ export class DeleteSale extends Component {
         super(props);
 
         this.state = {
-            isModalOpen: false
+            
+            customerName: props.customerName,
+            productName: props.productName,
+            storeName: props.storeName,
+            
+            id: props.id,
+            isModalOpen: false,
+
+
+
         }
+
+       
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
@@ -21,10 +36,30 @@ export class DeleteSale extends Component {
         this.setState({ isModalOpen: false })
     }
 
+    
+
+    async handleSubmit(event) {
+        event.preventDefault();
+
+         await fetch(`/api/Sales/ ${this.state.id}`, {
+            method: 'DELETE'
+           
+        })
+
+
+
+        this.closeModal();
+    }
+
+
+
+   
 
     render() {
 
+
         return (
+
             <Modal
                 onClose={this.closeModal}
                 onOpen={this.openModal}
@@ -34,28 +69,30 @@ export class DeleteSale extends Component {
                 className='modal'
             >
                 <Header>
-                    Create New Sale
+                    Delete Sale
 
                 </Header>
-                <Form id="form-data">
 
-                    <label>Customer</label>
-
+                <Form id="form-data" onSubmit={this.handleSubmit} >
 
 
+                    <input type="text" value={this.state.customerName} readOnly />
+                    <input type="text" value={this.state.storeName} readOnly />
+                    <input type="text" value={this.state.productName} readOnly />
 
+                    <input type='submit' value='submit' />
                 </Form>
-                v
-
-
-                <Button basic color='red' onClick={this.closeModal}>
-                    <Icon name='remove' /> Cancel
-                </Button>
 
             </Modal>
 
         );
     }
 
+   
+
+
 
 }
+
+
+

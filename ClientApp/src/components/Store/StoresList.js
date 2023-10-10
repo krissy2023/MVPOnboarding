@@ -1,33 +1,38 @@
 ﻿import React, { Component } from 'react';
 import { Icon, Menu, Table } from 'semantic-ui-react';
-import { CreateCustomer } from './CreateCustomer';
-import { EditCustomer } from "./EditCustomer";
-import { DeleteCustomer } from "./DeleteCustomer";
+import { CreateStore } from "./CreateStore";
+import { EditStore } from "./EditStore";
+import { DeleteStore } from "./DeleteStore";
 
 
-export class CustomersList extends Component {
 
-
+export class StoresList extends Component {
     constructor(props) {
         super(props);
-        this.state = { customers: [], loading: true };
+        this.state = { stores: [], loading: true }
+
 
 
     }
 
+
     componentDidMount() {
-        this.populateCustomersData();
+        this.populateStoresData();
     }
 
     componentDidUpdate() {
-        this.populateCustomersData();
+        this.populateStoresData();
     }
 
-    static renderCustomersTable(customers) {
+
+    static renderStoresTable(stores) {
+
+
+
         return (
             <div>
 
-                <CreateCustomer />
+                <CreateStore />
                 <Table celled>
                     <Table.Header>
                         <Table.Row>
@@ -41,13 +46,13 @@ export class CustomersList extends Component {
                     </Table.Header>
 
                     <Table.Body>
-                        {customers.map((c) =>
-                            <Table.Row key={c.id}>
-                                <Table.Cell>{c.id}</Table.Cell>
-                                <Table.Cell>{c.name}</Table.Cell>
-                                <Table.Cell>{c.address}</Table.Cell>
-                                <Table.Cell><EditCustomer id={c.id} name={c.name} address={c.address} /> </Table.Cell>
-                                <Table.Cell><DeleteCustomer id={c.id} name={c.name} address={c.address} /></Table.Cell>
+                        {stores.map((s) =>
+                            <Table.Row key={s.id}>
+                                <Table.Cell>{s.id}</Table.Cell>
+                                <Table.Cell>{s.name}</Table.Cell>
+                                <Table.Cell>{s.address}</Table.Cell>
+                                <Table.Cell><EditStore id={s.id} name={s.name} address={s.address} /> </Table.Cell>
+                                <Table.Cell><DeleteStore id={s.id} name={s.name} address={s.address} /></Table.Cell>
                             </Table.Row>
                         )}
 
@@ -77,25 +82,27 @@ export class CustomersList extends Component {
 
             </div>
         );
+
     }
 
-    render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : CustomersList.renderCustomersTable(this.state.customers);
 
+    render() {
+        let contents =
+            this.state.loading ? <p><em>Loading...</em> </p> : StoresList.renderStoresTable(this.state.stores)
         return (
             <div>
-                <h1> Customers List</h1>
-               
+                <h1> Stores List</h1>
                 {contents}
             </div>
         );
+
+    }
+    async populateStoresData() {
+        const response = await fetch('/api/Stores');
+        const data = await response.json();
+
+        this.setState({ stores: data, loading: false });
     }
 
-    async populateCustomersData() {
-        const response = await fetch('/api/Customers');
-        const data = await response.json();
-        this.setState({ customers: data, loading: false });
-    }
+
 }

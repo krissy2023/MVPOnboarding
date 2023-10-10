@@ -15,7 +15,7 @@ export class NavMenu extends Component {
                     name='Customers'
                     active={activeItem === 'Customers'}
                     onClick={this.handleItemClick}
-                    href='./customer/customerslist'
+                    href='./customers'
                 >
                     Customers
                 </Menu.Item>
@@ -24,6 +24,7 @@ export class NavMenu extends Component {
                     name='Products'
                     active={activeItem === 'Products'}
                     onClick={this.handleItemClick}
+                    href='./products'
                 >
                     Products
                 </Menu.Item>
@@ -32,8 +33,9 @@ export class NavMenu extends Component {
                     name='Stores'
                     active={activeItem === 'Stores'}
                     onClick={this.handleItemClick}
+                    href='./stores'
                 >
-                    Store
+                    Stores
                 </Menu.Item>
                 <Menu.Item
                     name='Sales'

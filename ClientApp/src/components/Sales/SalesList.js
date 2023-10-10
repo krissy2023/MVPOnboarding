@@ -7,10 +7,7 @@ import {DeleteSale } from './DeleteSale'
 export class SalesList extends Component {
     constructor() {
         super();
-        this.state = {
-            sales: []
-           
-        }
+        this.state = { sales: [], loading: true }
 
        
 
@@ -65,7 +62,14 @@ export class SalesList extends Component {
                                     productName={sale.product.name}
 
                                 /> </Table.Cell>
-                                <Table.Cell><DeleteSale /></Table.Cell>
+                                <Table.Cell><DeleteSale
+                                    id={sale.id}
+                                    customerId={sale.customerId}
+                                    productId={sale.productId}
+                                    storeId={sale.storeId}
+                                    customerName={sale.customer.name}
+                                    storeName={sale.store.name}
+                                    productName={sale.product.name} /></Table.Cell>
                             </Table.Row>
 
 
@@ -104,9 +108,11 @@ export class SalesList extends Component {
 
 
         render() {
-            let contents = SalesList.renderSalesTable(this.state.sales)
+            let contents =
+                this.state.loading ? <p><em>Loading...</em> </p> : SalesList.renderSalesTable(this.state.sales)
             return (
                 <div>
+                    <h1> Sales List</h1>
                     {contents}
                 </div>
             );
@@ -116,7 +122,7 @@ export class SalesList extends Component {
         const response = await fetch('/api/Sales');
         const data = await response.json();
         
-        this.setState({ sales: data });
+        this.setState({ sales: data, loading: false });
     }
 
 

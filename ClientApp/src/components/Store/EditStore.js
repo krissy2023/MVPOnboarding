@@ -3,14 +3,15 @@ import { Button, Header, Modal, Form, Icon } from 'semantic-ui-react'
 
 
 
-export class CreateCustomer extends Component {
+export class EditStore extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            fullname:"",
-            address: "",
+            id: props.id,
+            name: props.name,
+            address: props.address,
             isModalOpen: false
         }
         this.handleChangeName = this.handleChangeName.bind(this);
@@ -30,8 +31,8 @@ export class CreateCustomer extends Component {
     handleChangeName(event) {
 
         this.setState({
-            fullname: event.target.value
-           
+            name: event.target.value
+
         });
     }
     handleChangeAddress(event) {
@@ -42,49 +43,50 @@ export class CreateCustomer extends Component {
         });
     }
 
-  
 
-  async  handleSubmit(event) {
+
+    async handleSubmit(event) {
         event.preventDefault();
-        const response = await fetch('/api/Customers', {
-            method: 'POST',
+        event.target.reset();
+        const response = await fetch(`/api/Stores/ ${this.state.id}`, {
+            method: 'PUT',
             headers: {
                 'content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: this.state.fullname,
+                id: this.state.id,
+                name: this.state.name,
                 address: this.state.address
             })
         })
-      const {name, address } = await response.json();
-      this.setState({ fullname: name, address: address});
-      this.setState({fullname:"", address:""})
-      this.closeModal();
+
+
+        this.closeModal();
     }
 
- 
+
 
     render() {
-        
+       
         return (
             <Modal
                 onClose={this.closeModal}
                 onOpen={this.openModal}
                 open={this.state.isModalOpen}
                 size='small'
-                trigger={< Button > New Customer</Button>}
+                trigger={< Button > Edit</Button>}
                 className='modal'
             >
                 <Header>
-                    Create New Customer
+                    Update Store
 
                 </Header>
                 <Form id="form-data" onSubmit={this.handleSubmit}>
 
                     <label>Name</label>
-                    <input type='text' value={this.state.fullname} onChange={this.handleChangeName} />
+                    <input type='text' value={this.state.name} onChange={this.handleChangeName} />
                     <label>Address</label>
-                    <input type='text'  value={this.state.address} onChange={this.handleChangeAddress} />
+                    <input type='text' value={this.state.address} onChange={this.handleChangeAddress} />
 
                     <Button basic color='red' onClick={this.closeModal}>
                         <Icon name='remove' /> Cancel
@@ -101,7 +103,3 @@ export class CreateCustomer extends Component {
     }
 
 }
-
-
-
-

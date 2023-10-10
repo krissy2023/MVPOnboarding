@@ -1,53 +1,58 @@
 ﻿import React, { Component } from 'react';
 import { Icon, Menu, Table } from 'semantic-ui-react';
-import { CreateCustomer } from './CreateCustomer';
-import { EditCustomer } from "./EditCustomer";
-import { DeleteCustomer } from "./DeleteCustomer";
+import { CreateProduct } from "./CreateProduct";
+import { EditProduct } from "./EditProduct";
+import { DeleteProduct } from "./DeleteProduct";
 
 
-export class CustomersList extends Component {
 
-
+export class ProductsList extends Component {
     constructor(props) {
         super(props);
-        this.state = { customers: [], loading: true };
+        this.state = {products: [], loading: true}
+
 
 
     }
 
+
     componentDidMount() {
-        this.populateCustomersData();
+        this.populateProductsData();
     }
 
     componentDidUpdate() {
-        this.populateCustomersData();
+        this.populateProductsData();
     }
 
-    static renderCustomersTable(customers) {
+
+    static renderProductsTable(products) {
+
+
+
         return (
             <div>
 
-                <CreateCustomer />
+                <CreateProduct />
                 <Table celled>
                     <Table.Header>
                         <Table.Row>
-
+                            
                             <Table.HeaderCell>Id</Table.HeaderCell>
                             <Table.HeaderCell>Name</Table.HeaderCell>
-                            <Table.HeaderCell>Address</Table.HeaderCell>
+                            <Table.HeaderCell>Price</Table.HeaderCell>
                             <Table.HeaderCell>Edit</Table.HeaderCell>
                             <Table.HeaderCell>Delete</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 
                     <Table.Body>
-                        {customers.map((c) =>
-                            <Table.Row key={c.id}>
-                                <Table.Cell>{c.id}</Table.Cell>
-                                <Table.Cell>{c.name}</Table.Cell>
-                                <Table.Cell>{c.address}</Table.Cell>
-                                <Table.Cell><EditCustomer id={c.id} name={c.name} address={c.address} /> </Table.Cell>
-                                <Table.Cell><DeleteCustomer id={c.id} name={c.name} address={c.address} /></Table.Cell>
+                        {products.map((p) =>
+                            <Table.Row key={p.id}>
+                                <Table.Cell>{p.id}</Table.Cell>
+                                <Table.Cell>{p.name}</Table.Cell>
+                                <Table.Cell>{p.price}</Table.Cell>
+                                <Table.Cell><EditProduct id={p.id} name={p.name} price={p.price} /> </Table.Cell>
+                                <Table.Cell><DeleteProduct id={p.id} name={p.name} price={p.price} /></Table.Cell>
                             </Table.Row>
                         )}
 
@@ -77,25 +82,26 @@ export class CustomersList extends Component {
 
             </div>
         );
+
     }
 
-    render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : CustomersList.renderCustomersTable(this.state.customers);
 
+    render() {
+        let contents =
+            this.state.loading ? <p><em>Loading...</em> </p> : ProductsList.renderProductsTable(this.state.products);
         return (
             <div>
-                <h1> Customers List</h1>
-               
+                <h1> Products List</h1>
                 {contents}
             </div>
         );
+
+    }
+    async populateProductsData() {
+        const response = await fetch('/api/Products');
+        const data = await response.json();
+        this.setState({ products: data, loading: false });
     }
 
-    async populateCustomersData() {
-        const response = await fetch('/api/Customers');
-        const data = await response.json();
-        this.setState({ customers: data, loading: false });
-    }
+
 }
