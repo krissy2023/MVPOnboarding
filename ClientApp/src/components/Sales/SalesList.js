@@ -55,7 +55,16 @@ export class SalesList extends Component {
                                 <Table.Cell>{sale.product.name}</Table.Cell>
                                 <Table.Cell>{sale.store.name}</Table.Cell>
                                 <Table.Cell>{new Date(sale.dateSold).toLocaleString()}</Table.Cell>
-                                <Table.Cell><EditSale  /> </Table.Cell>
+                                <Table.Cell><EditSale
+                                    id={sale.id}
+                                    customerId={sale.customerId}
+                                    productId={sale.productId}
+                                    storeId={sale.storeId}
+                                    customerName={sale.customer.name}
+                                    storeName={sale.store.name}
+                                    productName={sale.product.name}
+
+                                /> </Table.Cell>
                                 <Table.Cell><DeleteSale /></Table.Cell>
                             </Table.Row>
 

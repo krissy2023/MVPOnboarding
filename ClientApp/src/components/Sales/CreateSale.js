@@ -120,12 +120,12 @@ export class CreateSale extends Component {
             </Header>
 
             <Form id="form-data" onSubmit={this.handleSubmit} >
-                <Form.Field
+                    <Form.Field
                         name="customers"
                         placeholder='Select Customer'
                         control={Select}
                         options={customers.map((c) =>
-                            ({ key: c.id, value: c.id, text: c.name })
+                            ({ key: c.id, value: c.id, text: <p>({c.id})&nbsp; &nbsp; &nbsp;{c.name}</p> })
                         )}
                         
                         onChange={this.changeCustomerHandler}

@@ -48,7 +48,7 @@ export class EditCustomer extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         event.target.reset();
-      const response =  await fetch('/api/Customers/' + `${this.state.id}`, {
+      const response =  await fetch(`/api/Customers/ ${this.state.id}`, {
             method: 'PUT',
             headers: {
                 'content-Type': 'application/json'

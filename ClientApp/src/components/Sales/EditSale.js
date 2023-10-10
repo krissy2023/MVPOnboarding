@@ -1,5 +1,8 @@
 ﻿import React, { Component } from "react";
-import { Button, Header, Modal, Form, Icon } from 'semantic-ui-react'
+import { Button, Header, Modal, Form, Icon, Input, Dropdown, Select } from 'semantic-ui-react'
+
+
+
 
 
 
@@ -8,8 +11,26 @@ export class EditSale extends Component {
         super(props);
 
         this.state = {
-            isModalOpen: false
+            customers: [],
+            products: [],
+            stores: [],
+            customerName: props.customerName,
+            productName: props.productName,
+            storeName: props.storeName,
+            customerId: props.customerId,
+            productId: props.productId,
+            storeId: props.storeId,
+            id: props.id,
+            isModalOpen: false,
+
+
+
         }
+
+        this.changeCustomerHandler = this.changeCustomerHandler.bind(this);
+        this.changeProductHandler = this.changeProductHandler.bind(this);
+        this.changeStoreHandler = this.changeStoreHandler.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
@@ -21,10 +42,76 @@ export class EditSale extends Component {
         this.setState({ isModalOpen: false })
     }
 
+    changeCustomerHandler = (e, { value }) => {
+
+        const val = JSON.stringify(value);
+        this.setState({ customerId: val })
+
+    }
+    changeProductHandler = (e, { value }) => {
+
+        const val = JSON.stringify(value);
+        this.setState({ productId: val })
+
+    }
+    changeStoreHandler = (e, { value }) => {
+
+        const val = JSON.stringify(value);
+        this.setState({ storeId: val })
+
+    }
+
+
+    async handleSubmit(event) {
+        event.preventDefault();
+
+        const response = await fetch(`/api/Sales/ ${this.state.id}`,{
+            method: 'PUT',
+            headers: {
+                'content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+
+                {
+                    id:this.state.id,
+                    customerId: this.state.customerId,
+                    productId: this.state.productId,
+                    storeId: this.state.storeId
+
+                }
+
+
+            )
+        })
+
+        
+
+        this.closeModal();
+    }
+
+
+
+    componentDidMount() {
+        this.getCustomersData();
+        this.getProductsData();
+        this.getStoresData();
+    }
 
     render() {
 
+        const customers = this.state.customers;
+        const products = this.state.products;
+        const stores = this.state.stores;
+        const cName = this.state.customerName;
+        const sName = this.state.storeName;
+        const pName = this.state.productName;
+
+       
+
+
+
         return (
+
             <Modal
                 onClose={this.closeModal}
                 onOpen={this.openModal}
@@ -34,28 +121,81 @@ export class EditSale extends Component {
                 className='modal'
             >
                 <Header>
-                    Create New Sale
+                    Edit Sale
 
                 </Header>
-                <Form id="form-data">
 
-                    <label>Customer</label>
+                <Form id="form-data" onSubmit={this.handleSubmit} >
+                    <Form.Field
+                        name="customers"
+                        placeholder={cName}
+                        control={Select}
+                        options={customers.map((c) =>
+                            ({ key: c.id, value: c.id, text: <p>({c.id})&nbsp; &nbsp; &nbsp;{c.name}</p> })
+                        )}
+                        
+                        onChange={this.changeCustomerHandler}
+                    >
+                    </Form.Field>
 
 
+                    <Form.Field
+                        name="customers"
+                        placeholder={pName}
+                        control={Select}
+                        options={products.map((p) =>
+                            ({ key: p.id, value: p.id, text: p.name })
+                        )}
+                        
+                        onChange={this.changeProductHandler}
+
+                    >
+                    </Form.Field>
 
 
+                    <Form.Field
+                        name="customers"
+                        placeholder={sName }
+                        control={Select}
+                        options={stores.map((s) =>
+                            ({ key: s.id, value: s.id, text: s.name })
+                        )}
+                        
+                        onChange={this.changeStoreHandler}
+
+                    >
+                    </Form.Field>
+                    <input type='submit' value='submit' />
                 </Form>
-                v
-
-
-                <Button basic color='red' onClick={this.closeModal}>
-                    <Icon name='remove' /> Cancel
-                </Button>
 
             </Modal>
 
         );
     }
 
+    async getCustomersData() {
+        const response = await fetch('/api/Customers');
+        const data = await response.json();
+        this.setState({ customers: data });
+
+
+    }
+    async getProductsData() {
+        const response = await fetch('/api/Products');
+        const data = await response.json();
+        this.setState({ products: data });
+
+
+    }
+    async getStoresData() {
+        const response = await fetch('/api/Stores');
+        const data = await response.json();
+        this.setState({ stores: data });
+
+
+    }
+
+
 
 }
+
