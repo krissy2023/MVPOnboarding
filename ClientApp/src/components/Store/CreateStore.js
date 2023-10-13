@@ -58,6 +58,7 @@ export class CreateStore extends Component {
         })
         const { name, address } = await response.json();
         this.setState({ name: name, address: address });
+        this.props.fetchData();
         this.setState({ name: "", address: "" })
         this.closeModal();
     }

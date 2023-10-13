@@ -60,7 +60,7 @@ export class EditProduct extends Component {
             })
         })
 
-
+        this.props.fetchData();
         this.closeModal();
     }
 
@@ -70,7 +70,7 @@ export class EditProduct extends Component {
 
         return (
             <Modal
-                onClose={this.closeModal}
+                onClose={(e) => this.setState({ isModalOpen: false, name: this.props.name, address: this.props.price })}
                 onOpen={this.openModal}
                 open={this.state.isModalOpen}
                 size='small'
@@ -88,7 +88,7 @@ export class EditProduct extends Component {
                     <label>Price</label>
                     <input type='text' value={this.state.price} onChange={this.handleChangePrice} />
 
-                    <Button basic color='red' onClick={this.closeModal}>
+                    <Button basic color='red' onClick={(e) => this.setState({ isModalOpen: false, name: this.props.name, address: this.props.address })}>
                         <Icon name='remove' /> Cancel
                     </Button>
                     <input type='submit' value='submit' />

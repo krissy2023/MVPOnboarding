@@ -60,7 +60,7 @@ export class EditStore extends Component {
             })
         })
 
-
+        this.props.fetchData();
         this.closeModal();
     }
 
@@ -70,7 +70,7 @@ export class EditStore extends Component {
        
         return (
             <Modal
-                onClose={this.closeModal}
+                onClose={(e) => this.setState({ isModalOpen: false, name: this.props.name, address: this.props.address })}
                 onOpen={this.openModal}
                 open={this.state.isModalOpen}
                 size='small'
@@ -88,7 +88,7 @@ export class EditStore extends Component {
                     <label>Address</label>
                     <input type='text' value={this.state.address} onChange={this.handleChangeAddress} />
 
-                    <Button basic color='red' onClick={this.closeModal}>
+                    <Button basic color='red' onClick={(e) => this.setState({ isModalOpen: false, name: this.props.name, address: this.props.address })}>
                         <Icon name='remove' /> Cancel
                     </Button>
                     <input type='submit' value='submit' />

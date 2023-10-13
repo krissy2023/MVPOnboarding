@@ -85,7 +85,7 @@ export class EditSale extends Component {
         })
 
         
-
+        this.props.fetchData();
         this.closeModal();
     }
 

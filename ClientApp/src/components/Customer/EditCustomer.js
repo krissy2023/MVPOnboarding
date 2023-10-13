@@ -10,7 +10,7 @@ export class EditCustomer extends Component {
 
         this.state = {
             id:props.id,
-            fullname: props.fullname,
+            name: props.name,
             address: props.address,
             isModalOpen: false
         }
@@ -31,7 +31,7 @@ export class EditCustomer extends Component {
     handleChangeName(event) {
 
         this.setState({
-            fullname: event.target.value
+            name: event.target.value
 
         });
     }
@@ -55,22 +55,22 @@ export class EditCustomer extends Component {
             },
             body: JSON.stringify({
                 id:this.state.id,
-                name: this.state.fullname,
+                name: this.state.name,
                 address: this.state.address
             })
         })
          
-        
+        this.props.fetchData();
         this.closeModal();
     }
 
-
+    
 
     render() {
 
         return (
             <Modal
-                onClose={this.closeModal}
+                onClose={(e) => this.setState({isModalOpen: false, name: this.props.name, address: this.props.address})}
                 onOpen={this.openModal}
                 open={this.state.isModalOpen}
                 size='small'
@@ -84,11 +84,11 @@ export class EditCustomer extends Component {
                 <Form id="form-data" onSubmit={this.handleSubmit}>
 
                     <label>Name</label>
-                    <input type='text' value={this.state.fullname} onChange={this.handleChangeName} />
+                    <input type='text' value={this.state.name} onChange={this.handleChangeName} />
                     <label>Address</label>
                     <input type='text' value={this.state.address} onChange={this.handleChangeAddress} />
 
-                    <Button basic color='red' onClick={this.closeModal}>
+                    <Button basic color='red' onClick={(e) => this.setState({ isModalOpen: false, name: this.props.name, address: this.props.address })}>
                         <Icon name='remove' /> Cancel
                     </Button>
                     <input type='submit' value='submit' />

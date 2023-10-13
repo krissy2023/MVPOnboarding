@@ -57,7 +57,7 @@ export class DeleteStore extends Component {
             })
 
         })
-
+        this.props.fetchData();
         this.closeModal();
 
 

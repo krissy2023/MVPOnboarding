@@ -16,102 +16,106 @@ export class SalesList extends Component {
    
     componentDidMount() {
         this.populateSalesData();
+        console.log("data mounted");
     }
 
-    componentDidUpdate() {
+    fetchData() {
         this.populateSalesData();
+        console.log("data fetched");
     }
 
 
-    static renderSalesTable(sales) {
-        
-       
+  render() {
+            const sales = this.state.sales;
+      console.log("data rendered");
+    let contents =
+                this.state.loading ? <p><em>Loading...</em> </p> : <div>
+                    <div>
+                     <CreateSale fetchData={this.fetchData.bind(this)} />
+                        <Table celled>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>Customer</Table.HeaderCell>
+                                    <Table.HeaderCell>Product</Table.HeaderCell>
+                                    <Table.HeaderCell>Store</Table.HeaderCell>
+                                    <Table.HeaderCell>DateSold</Table.HeaderCell>
+                                    <Table.HeaderCell>Edit</Table.HeaderCell>
+                                    <Table.HeaderCell>Delete</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
 
-        return (
-            <div>
-               
-               <CreateSale />
-                <Table celled>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell>Customer</Table.HeaderCell>
-                            <Table.HeaderCell>Product</Table.HeaderCell>
-                            <Table.HeaderCell>Store</Table.HeaderCell>
-                            <Table.HeaderCell>DateSold</Table.HeaderCell>
-                            <Table.HeaderCell>Edit</Table.HeaderCell>
-                            <Table.HeaderCell>Delete</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
+                            <Table.Body>
+                                {sales.map((
+                                    sale
+                                ) =>
+                                    <Table.Row key={sale.id}>
+                                        <Table.Cell>{sale.customer.name}</Table.Cell>
+                                        <Table.Cell>{sale.product.name}</Table.Cell>
+                                        <Table.Cell>{sale.store.name}</Table.Cell>
+                                        <Table.Cell>{new Date(sale.dateSold).toLocaleString()}</Table.Cell>
+                                        <Table.Cell><EditSale
+                                            id={sale.id}
+                                            customerId={sale.customerId}
+                                            productId={sale.productId}
+                                            storeId={sale.storeId}
+                                            customerName={sale.customer.name}
+                                            storeName={sale.store.name}
+                                            productName={sale.product.name}
+                                            fetchData={this.fetchData.bind(this)}
 
-                    <Table.Body>
-                        {sales.map((
-                           sale
-                            ) => 
-                            <Table.Row key={sale.id}>
-                                <Table.Cell>{sale.customer.name}</Table.Cell>
-                                <Table.Cell>{sale.product.name}</Table.Cell>
-                                <Table.Cell>{sale.store.name}</Table.Cell>
-                                <Table.Cell>{new Date(sale.dateSold).toLocaleString()}</Table.Cell>
-                                <Table.Cell><EditSale
-                                    id={sale.id}
-                                    customerId={sale.customerId}
-                                    productId={sale.productId}
-                                    storeId={sale.storeId}
-                                    customerName={sale.customer.name}
-                                    storeName={sale.store.name}
-                                    productName={sale.product.name}
-
-                                /> </Table.Cell>
-                                <Table.Cell><DeleteSale
-                                    id={sale.id}
-                                    customerId={sale.customerId}
-                                    productId={sale.productId}
-                                    storeId={sale.storeId}
-                                    customerName={sale.customer.name}
-                                    storeName={sale.store.name}
-                                    productName={sale.product.name} /></Table.Cell>
-                            </Table.Row>
-
-
-                        
-                        )
-                        }
-
-                    </Table.Body>
-
-                    <Table.Footer>
-                        <Table.Row>
-                            <Table.HeaderCell colSpan='6'>
-
-                            </Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Footer>
-
-                </Table>
-                <Menu floated='right' pagination>
-                    <Menu.Item as='a' icon>
-                        <Icon name='chevron left' />
-                    </Menu.Item>
-                    <Menu.Item as='a'>1</Menu.Item>
-                    <Menu.Item as='a'>2</Menu.Item>
-                    <Menu.Item as='a'>3</Menu.Item>
-                    <Menu.Item as='a'>4</Menu.Item>
-                    <Menu.Item as='a' icon>
-                        <Icon name='chevron right' />
-                    </Menu.Item>
-                </Menu>
-
-            </div>
-        );
-
-    }
+                                        /> </Table.Cell>
+                                        <Table.Cell><DeleteSale
+                                            id={sale.id}
+                                            customerId={sale.customerId}
+                                            productId={sale.productId}
+                                            storeId={sale.storeId}
+                                            customerName={sale.customer.name}
+                                            storeName={sale.store.name}
+                                            productName={sale.product.name}
+                                            fetchData={this.fetchData.bind(this)}
+                                        /></Table.Cell>
+                                    </Table.Row>
 
 
-        render() {
-            let contents =
-                this.state.loading ? <p><em>Loading...</em> </p> : SalesList.renderSalesTable(this.state.sales)
+
+                                )
+                                }
+
+                            </Table.Body>
+
+                            <Table.Footer>
+                                <Table.Row>
+                                    <Table.HeaderCell colSpan='6'>
+
+                                    </Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Footer>
+
+                        </Table>
+                        <Menu floated='right' pagination>
+                            <Menu.Item as='a' icon>
+                                <Icon name='chevron left' />
+                            </Menu.Item>
+                            <Menu.Item as='a'>1</Menu.Item>
+                            <Menu.Item as='a'>2</Menu.Item>
+                            <Menu.Item as='a'>3</Menu.Item>
+                            <Menu.Item as='a'>4</Menu.Item>
+                            <Menu.Item as='a' icon>
+                                <Icon name='chevron right' />
+                            </Menu.Item>
+                        </Menu>
+
+                    </div>
+
+
+
+
+
+
+                </div>
             return (
                 <div>
+                    {console.log("data returned")}
                     <h1> Sales List</h1>
                     {contents}
                 </div>
@@ -124,6 +128,4 @@ export class SalesList extends Component {
         
         this.setState({ sales: data, loading: false });
     }
-
-
 }

@@ -9,9 +9,10 @@ export class CreateCustomer extends Component {
         super(props);
 
         this.state = {
-            fullname:"",
-            address: "",
+            name:"",
+            address:"",
             isModalOpen: false
+
         }
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChangeAddress = this.handleChangeAddress.bind(this);
@@ -30,7 +31,7 @@ export class CreateCustomer extends Component {
     handleChangeName(event) {
 
         this.setState({
-            fullname: event.target.value
+            name: event.target.value
            
         });
     }
@@ -42,31 +43,36 @@ export class CreateCustomer extends Component {
         });
     }
 
-  
+   
 
-  async  handleSubmit(event) {
-        event.preventDefault();
-        const response = await fetch('/api/Customers', {
-            method: 'POST',
-            headers: {
-                'content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: this.state.fullname,
-                address: this.state.address
-            })
-        })
-      const {name, address } = await response.json();
-      this.setState({ fullname: name, address: address});
-      this.setState({fullname:"", address:""})
-      this.closeModal();
+ async handleSubmit(event) {
+     event.preventDefault();
+     const response = await fetch('/api/Customers', {
+         method: 'POST',
+         headers: {
+             'content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+             name: this.state.name,
+             address: this.state.address
+         })
+     })
+     const data = await response.json();
+     
+     this.props.fetchData();
+     this.setState({ name: "", address: "" })
+     
+     this.closeModal();
+      
     }
 
+    
  
 
     render() {
         
         return (
+            
             <Modal
                 onClose={this.closeModal}
                 onOpen={this.openModal}
@@ -75,21 +81,18 @@ export class CreateCustomer extends Component {
                 trigger={< Button > New Customer</Button>}
                 className='modal'
             >
-                <Header>
-                    Create New Customer
-
-                </Header>
+                
                 <Form id="form-data" onSubmit={this.handleSubmit}>
 
                     <label>Name</label>
-                    <input type='text' value={this.state.fullname} onChange={this.handleChangeName} />
+                    <input type='text' value={this.state.name} onChange={this.handleChangeName} />
                     <label>Address</label>
                     <input type='text'  value={this.state.address} onChange={this.handleChangeAddress} />
 
                     <Button basic color='red' onClick={this.closeModal}>
                         <Icon name='remove' /> Cancel
                     </Button>
-                    <input type='submit' value='submit' />
+                    <input type='submit' value='submit'  />
 
                 </Form>
 

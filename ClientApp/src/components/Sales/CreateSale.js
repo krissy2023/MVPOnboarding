@@ -81,7 +81,7 @@ export class CreateSale extends Component {
         })
 
          await response.json();
-        
+        this.props.fetchData();
         this.closeModal();
     }
 
@@ -182,6 +182,7 @@ export class CreateSale extends Component {
     async getStoresData() {
         const response = await fetch('/api/Stores');
         const data = await response.json();
+      
         this.setState({ stores: data });
 
 

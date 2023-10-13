@@ -25,14 +25,19 @@ export class StoresList extends Component {
     }
 
 
-    static renderStoresTable(stores) {
+    fetchData() {
+        this.populateStoresData();
+    }
+
+       
+
+    render() {
+        const stores = this.state.stores;
+        let contents =
+            this.state.loading ? <p><em>Loading...</em> </p> : <div>
 
 
-
-        return (
-            <div>
-
-                <CreateStore />
+                <CreateStore fetchdata={this.fetchData.bind(this)} />
                 <Table celled>
                     <Table.Header>
                         <Table.Row>
@@ -51,8 +56,8 @@ export class StoresList extends Component {
                                 <Table.Cell>{s.id}</Table.Cell>
                                 <Table.Cell>{s.name}</Table.Cell>
                                 <Table.Cell>{s.address}</Table.Cell>
-                                <Table.Cell><EditStore id={s.id} name={s.name} address={s.address} /> </Table.Cell>
-                                <Table.Cell><DeleteStore id={s.id} name={s.name} address={s.address} /></Table.Cell>
+                                <Table.Cell><EditStore id={s.id} name={s.name} address={s.address} fetchdata={this.fetchData.bind(this)} /> </Table.Cell>
+                                <Table.Cell><DeleteStore id={s.id} name={s.name} address={s.address} fetchdata={this.fetchData.bind(this)} /></Table.Cell>
                             </Table.Row>
                         )}
 
@@ -80,15 +85,11 @@ export class StoresList extends Component {
                     </Menu.Item>
                 </Menu>
 
+
+
+
+
             </div>
-        );
-
-    }
-
-
-    render() {
-        let contents =
-            this.state.loading ? <p><em>Loading...</em> </p> : StoresList.renderStoresTable(this.state.stores)
         return (
             <div>
                 <h1> Stores List</h1>

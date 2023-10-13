@@ -57,7 +57,7 @@ export class DeleteProduct extends Component {
             })
 
         })
-
+        this.props.fetchData();
         this.closeModal();
 
 

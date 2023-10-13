@@ -9,8 +9,8 @@ export class CreateProduct extends Component {
         super(props);
 
         this.state = {
-            name: "",
-            price: "",
+            name:"",
+            price:"",
             isModalOpen: false
         }
         this.handleChangeName = this.handleChangeName.bind(this);
@@ -44,7 +44,7 @@ export class CreateProduct extends Component {
 
 
 
-    async handleSubmit(event) {
+   async handleSubmit(event) {
         event.preventDefault();
         const response = await fetch('/api/Products', {
             method: 'POST',
@@ -56,12 +56,12 @@ export class CreateProduct extends Component {
                 price: this.state.price
             })
         })
-        const { name, price } = await response.json();
-        this.setState({ name: name, price: price });
-        this.setState({ name: "", price: "" })
+       
+        this.props.fetchData();
+        this.setState({ name: "", price: "" });
         this.closeModal();
-    }
 
+    }
 
 
     render() {

@@ -10,7 +10,7 @@ export class DeleteCustomer extends Component {
 
         this.state = {
             id: props.id,
-            fullname: props.fullname,
+            name: props.name,
             address: props.address,
             isModalOpen: false
         }
@@ -31,7 +31,7 @@ export class DeleteCustomer extends Component {
     handleChangeName(event) {
 
         this.setState({
-            fullname: event.target.value
+            name: event.target.value
 
         });
     }
@@ -47,24 +47,24 @@ export class DeleteCustomer extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         event.target.reset();
-
+        
        const response = await fetch('/api/Customers/' + `${this.state.id}`, {
             method: 'DELETE',
            body: JSON.stringify({
                  id:this.state.id,
-                 name: this.state.fullname,
+                 name: this.state.name,
                  address: this.state.address
              })
             
         })
-        
+        this.props.fetchData();
         this.closeModal();
 
 
     }
 
     render() {
-        const fullname = this.props.fullname;
+        const name = this.props.name;
         const address = this.props.address;
         return (
             <Modal
@@ -82,7 +82,7 @@ export class DeleteCustomer extends Component {
                 <Form onSubmit={this.handleSubmit}>
 
                     <label>Name</label>
-                    <input type='text' value={fullname} readOnly/>
+                    <input type='text' value={name} readOnly/>
                     <label>Address</label>
                     <input type='text' value={address}  readOnly/>
 
