@@ -71,27 +71,27 @@ export class DeleteProduct extends Component {
                 onClose={this.closeModal}
                 onOpen={this.openModal}
                 open={this.state.isModalOpen}
-                size='small'
-                trigger={< Button > Delete</Button>}
+                size='tiny'
+                trigger={< Button color="grey"> Delete</Button>}
                 className='modal'
             >
-                <Header>
-                    Delete Product
+                <h3> Delete Product </h3>
 
-                </Header>
                 <Form onSubmit={this.handleSubmit}>
-
+                   <Form.Field>
                     <label>Name</label>
-                    <input type='text' value={name} readOnly />
+                        <input type='text' value={name} readOnly />
+                    </Form.Field>
+                    <Form.Field>
                     <label>Price</label>
                     <input type='text' value={price} readOnly />
-
-                    <Button basic color='red' onClick={this.closeModal}>
+                    </Form.Field>
+                   
+                    <Button floated="right" inverted color='green' type='submit' value='submit' >
+                        <Icon name='checkmark' /> Delete </Button>
+                    <Button floated="right" inverted color='red' onClick={this.closeModal}>
                         <Icon name='remove' /> Cancel
                     </Button>
-
-                    <input type='submit' value='submit' />
-
 
                 </Form>
 

@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Table, Pagination} from 'semantic-ui-react';
+import { Table, Pagination, Header} from 'semantic-ui-react';
 import { CreateCustomer } from "./CreateCustomer";
 import { EditCustomer } from "./EditCustomer";
 import { DeleteCustomer } from "./DeleteCustomer";
@@ -55,7 +55,7 @@ export class CustomersList extends Component {
 
                 <div>
                     <CreateCustomer fetchData={this.fetchData.bind(this)} />
-                    < Table celled>
+                    < Table celled >
                         <Table.Header>
                             <Table.Row>
 
@@ -112,7 +112,7 @@ export class CustomersList extends Component {
                  
         return (
             <div>
-               
+                <Header size="large" color="blue"> Customers List </Header>
                 {contents}
 
                 

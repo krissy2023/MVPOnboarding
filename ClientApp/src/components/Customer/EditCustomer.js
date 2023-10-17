@@ -73,26 +73,31 @@ export class EditCustomer extends Component {
                 onClose={(e) => this.setState({isModalOpen: false, name: this.props.name, address: this.props.address})}
                 onOpen={this.openModal}
                 open={this.state.isModalOpen}
-                size='small'
-                trigger={< Button > Edit</Button>}
+                size='tiny'
+                trigger={<Button color="blue" > Edit</Button>}
                 className='modal'
             >
-                <Header>
-                    Update Customer
+               
+                <h3> Update Customer </h3>
 
-                </Header>
+              
                 <Form id="form-data" onSubmit={this.handleSubmit}>
-
+                     <Form.Field>
                     <label>Name</label>
-                    <input type='text' value={this.state.name} onChange={this.handleChangeName} />
+                        <input type='text' value={this.state.name} onChange={this.handleChangeName} />
+                    </Form.Field>
+                    <Form.Field>
                     <label>Address</label>
-                    <input type='text' value={this.state.address} onChange={this.handleChangeAddress} />
+                        <input type='text' value={this.state.address} onChange={this.handleChangeAddress} />
+                    </Form.Field>
 
-                    <Button basic color='red' onClick={(e) => this.setState({ isModalOpen: false, name: this.props.name, address: this.props.address })}>
+                    <Button floated="right" inverted color='green' type='submit' value='submit' >
+                        <Icon name='checkmark' /> Submit </Button>
+
+                    <Button floated="right" inverted color='red'  onClick={(e) => this.setState({ isModalOpen: false, name: this.props.name, address: this.props.address })}>
                         <Icon name='remove' /> Cancel
                     </Button>
-                    <input type='submit' value='submit' />
-
+                    
                 </Form>
 
 

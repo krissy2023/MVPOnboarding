@@ -11,12 +11,12 @@ code {
   color: #E01A76;
 }
 
-.btn-primary {
+/*.btn-primary {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-
+*/
 .modal
 {
     height: auto;
@@ -24,5 +24,10 @@ code {
     left: auto;
     bottom: auto;
     right: auto;
+    padding: 10px;
 }
 
+h1 {
+    color: #256D85;
+    
+}

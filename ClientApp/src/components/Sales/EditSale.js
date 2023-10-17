@@ -116,18 +116,18 @@ export class EditSale extends Component {
                 onClose={this.closeModal}
                 onOpen={this.openModal}
                 open={this.state.isModalOpen}
-                size='small'
-                trigger={< Button > Edit </Button>}
+                size='tiny'
+                trigger={< Button color="blue" > Edit </Button>}
                 className='modal'
             >
-                <Header>
-                    Edit Sale
+              
+                <h3> Edit Sale </h3>
 
-                </Header>
+               
 
                 <Form id="form-data" onSubmit={this.handleSubmit} >
                     <Form.Field
-                        name="customers"
+                        label="Customer"
                         placeholder={cName}
                         control={Select}
                         options={customers.map((c) =>
@@ -140,7 +140,7 @@ export class EditSale extends Component {
 
 
                     <Form.Field
-                        name="customers"
+                        label="Product"
                         placeholder={pName}
                         control={Select}
                         options={products.map((p) =>
@@ -154,7 +154,7 @@ export class EditSale extends Component {
 
 
                     <Form.Field
-                        name="customers"
+                        label="Store"
                         placeholder={sName }
                         control={Select}
                         options={stores.map((s) =>
@@ -165,7 +165,13 @@ export class EditSale extends Component {
 
                     >
                     </Form.Field>
-                    <input type='submit' value='submit' />
+
+                    <Button floated="right" inverted color='green' type='submit' value='submit' >
+                        <Icon name='checkmark' /> Submit </Button>
+                    <Button floated="right" inverted color='red' onClick={(e) => this.setState({ isModalOpen: false })}>
+                        <Icon name='remove' /> Cancel
+                    </Button>
+                    
                 </Form>
 
             </Modal>

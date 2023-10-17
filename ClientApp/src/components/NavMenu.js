@@ -10,7 +10,7 @@ export class NavMenu extends Component {
         const { activeItem } = this.state
 
         return (
-            <Menu>
+            <Menu size="large">
                 <Menu.Item
                     name='Customers'
                     active={activeItem === 'Customers'}

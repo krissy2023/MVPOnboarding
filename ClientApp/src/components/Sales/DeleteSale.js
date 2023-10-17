@@ -1,5 +1,5 @@
 ﻿import React, { Component } from "react";
-import { Button, Header, Modal, Form} from 'semantic-ui-react'
+import { Button, Header, Modal, Form, Icon} from 'semantic-ui-react'
 
 
 
@@ -64,23 +64,36 @@ export class DeleteSale extends Component {
                 onClose={this.closeModal}
                 onOpen={this.openModal}
                 open={this.state.isModalOpen}
-                size='small'
-                trigger={< Button > Delete </Button>}
+                size='tiny'
+                trigger={< Button color="grey" > Delete </Button>}
                 className='modal'
             >
-                <Header>
-                    Delete Sale
+               
+                <h3>  Delete Sale </h3>
 
-                </Header>
+                
 
                 <Form id="form-data" onSubmit={this.handleSubmit} >
-
-
-                    <input type="text" value={this.state.customerName} readOnly />
-                    <input type="text" value={this.state.storeName} readOnly />
+                   <Form.Field>
+                    <label>Customer</label>
+                        <input type="text" value={this.state.customerName} readOnly />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Store</label>
+                        <input type="text" value={this.state.storeName} readOnly />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Product</label>
                     <input type="text" value={this.state.productName} readOnly />
+                    </Form.Field>
 
-                    <input type='submit' value='submit' />
+                    <Button floated="right" inverted color='green' type='submit' value='submit' >
+                        <Icon name='checkmark' /> Delete </Button>
+                    <Button floated="right" inverted color='red' onClick={this.closeModal}>
+                        <Icon name='remove' /> Cancel
+                    </Button>
+
+                    
                 </Form>
 
             </Modal>

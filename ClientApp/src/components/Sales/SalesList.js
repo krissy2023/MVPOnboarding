@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Table, Pagination } from 'semantic-ui-react'
+import { Table, Pagination, Header} from 'semantic-ui-react'
 import { CreateSale } from './CreateSale'
 import {EditSale } from './EditSale'
 import {DeleteSale } from './DeleteSale'
@@ -120,7 +120,7 @@ export class SalesList extends Component {
             return (
                 <div>
                    
-                    <h1> Sales List</h1>
+                    <Header size="large" color="blue"> Sales List </Header>
                     {contents}
                 </div>
             );

@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import {  Table, Pagination } from 'semantic-ui-react';
+import {  Table, Pagination, Header } from 'semantic-ui-react';
 import { CreateProduct } from "./CreateProduct";
 import { EditProduct } from "./EditProduct";
 import { DeleteProduct } from "./DeleteProduct";
@@ -111,7 +111,7 @@ export class ProductsList extends Component {
         return (
             <div>
 
-                <h1> Products List</h1>
+                <Header size="large" color="blue"> Products List </Header>
                
                 
                 {contents}

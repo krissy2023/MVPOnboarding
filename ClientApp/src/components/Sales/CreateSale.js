@@ -1,5 +1,5 @@
 ﻿import React, { Component } from "react";
-import { Button, Header, Modal, Form, Icon, Input, Dropdown, Select } from 'semantic-ui-react'
+import { Button, Modal, Form, Icon, Input, Dropdown, Select } from 'semantic-ui-react'
 
 
 
@@ -110,18 +110,18 @@ export class CreateSale extends Component {
             onClose={this.closeModal}
             onOpen={this.openModal}
             open={this.state.isModalOpen}
-            size='small'
-            trigger={< Button > New Sale</Button>}
+            size='tiny'
+            trigger={< Button color="olive"> New Sale</Button>}
             className='modal'
         >
-            <Header>
-                Create New Sale
+            
+                <h3> Create New Sale </h3>
 
-            </Header>
+            
 
             <Form id="form-data" onSubmit={this.handleSubmit} >
                     <Form.Field
-                        name="customers"
+                        label="Customer"
                         placeholder='Select Customer'
                         control={Select}
                         options={customers.map((c) =>
@@ -129,12 +129,12 @@ export class CreateSale extends Component {
                         )}
                         
                         onChange={this.changeCustomerHandler}
-                >
+                    >
                 </Form.Field>
 
 
                 <Form.Field
-                        name="customers"
+                        label="Product"
                         placeholder='Select Product'
                         control={Select}
                         options={products.map((p) =>
@@ -147,7 +147,7 @@ export class CreateSale extends Component {
 
 
                 <Form.Field
-                        name="customers"
+                        label="Store"
                         placeholder='Select Store'
                         control={Select}
                         options={stores.map((s) =>
@@ -156,8 +156,14 @@ export class CreateSale extends Component {
                         onChange={this.changeStoreHandler}
                      
                 >
-                </Form.Field>
-                <input type='submit' value='submit' />
+                    </Form.Field>
+                    <Button floated="right" inverted color='green' type='submit' value='submit' >
+                        <Icon name='checkmark' /> Submit </Button>
+
+                    <Button floated="right" inverted color='red' onClick={this.closeModal}>
+                        <Icon name='remove' /> Cancel
+                    </Button>
+                    
             </Form>
 
         </Modal>

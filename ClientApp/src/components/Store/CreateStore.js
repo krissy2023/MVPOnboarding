@@ -74,25 +74,31 @@ export class CreateStore extends Component {
                 onClose={this.closeModal}
                 onOpen={this.openModal}
                 open={this.state.isModalOpen}
-                size='small'
-                trigger={< Button > New Store</Button>}
+                size='tiny'
+                trigger={< Button color="olive"> New Store</Button>}
                 className='modal'
             >
-                <Header>
-                    Create New Store
+                
+                <h3> Create New Store </h3>
 
-                </Header>
+                
                 <Form id="form-data" onSubmit={this.handleSubmit}>
-
+                   <Form.Field>
                     <label>Name</label>
-                    <input type='text' value={this.state.name} onChange={this.handleChangeName} />
+                        <input type='text' value={this.state.name} onChange={this.handleChangeName} />
+                    </Form.Field>
+                    <Form.Field>
                     <label>Address</label>
                     <input type='text' value={this.state.address} onChange={this.handleChangeAddress} />
+                    </Form.Field>
 
-                    <Button basic color='red' onClick={this.closeModal}>
+                    <Button floated="right" inverted color='green' type='submit' value='submit' >
+                        <Icon name='checkmark' /> Submit </Button>
+                    <Button floated="right" inverted color='red' onClick={this.closeModal}>
                         <Icon name='remove' /> Cancel
                     </Button>
-                    <input type='submit' value='submit' />
+                   
+
 
                 </Form>
 
