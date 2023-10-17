@@ -1,8 +1,10 @@
 ﻿import React, { Component } from 'react';
-import { Icon, Menu, Table } from 'semantic-ui-react';
+import { Table, Pagination} from 'semantic-ui-react';
 import { CreateCustomer } from "./CreateCustomer";
 import { EditCustomer } from "./EditCustomer";
 import { DeleteCustomer } from "./DeleteCustomer";
+
+
 
 
 
@@ -13,11 +15,11 @@ export class CustomersList extends Component {
            
             customers: [],
             loading: true,
-            
-            
+            value: 1,
+        
         }
 
-
+        
 
     }
 
@@ -26,77 +28,94 @@ export class CustomersList extends Component {
         this.populateCustomersData();
     }
 
-   
 
    
        
     fetchData() {
         this.populateCustomersData();
     }
-    
 
+  
+
+   
     render() {
-        
         const customers = this.state.customers;
+        const itemsPerPage = 10;
+        var indexOfLastItem = this.state.value * itemsPerPage;
+        var indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        var currentItems = customers.slice(indexOfFirstItem, indexOfLastItem);
+        const totalItems = customers.length;
+        const numberOfPages = Math.ceil(totalItems / itemsPerPage);
        
-     let contents =
-        this.state.loading ? <p><em>Loading...</em> </p> :
-                
-             <div>
-                 <CreateCustomer fetchData={this.fetchData.bind(this)} />
-                < Table celled>
-                    <Table.Header>
-                        <Table.Row>
+        let contents = this.state.loading ?
+            <p> <em>Loading...</em> </p> :
 
-                            <Table.HeaderCell>Id</Table.HeaderCell>
-                            <Table.HeaderCell>Name</Table.HeaderCell>
-                            <Table.HeaderCell>Address</Table.HeaderCell>
-                            <Table.HeaderCell>Edit</Table.HeaderCell>
-                            <Table.HeaderCell>Delete</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
 
-                    <Table.Body>
-                        {customers.map((c) =>
-                            <Table.Row key={c.id}>
-                                <Table.Cell>{c.id}</Table.Cell>
-                                <Table.Cell>{c.name}</Table.Cell>
-                                <Table.Cell>{c.address}</Table.Cell>
-                                <Table.Cell><EditCustomer id={c.id} name={c.name} address={c.address} fetchData={this.fetchData.bind(this)} /> </Table.Cell>
-                                <Table.Cell><DeleteCustomer id={c.id} name={c.name} address={c.address} fetchData={this.fetchData.bind(this)} /></Table.Cell>
+            currentItems.length !== 0 || this.state.value === 1 ?
+
+                <div>
+                    <CreateCustomer fetchData={this.fetchData.bind(this)} />
+                    < Table celled>
+                        <Table.Header>
+                            <Table.Row>
+
+                                <Table.HeaderCell>Id</Table.HeaderCell>
+                                <Table.HeaderCell>Name</Table.HeaderCell>
+                                <Table.HeaderCell>Address</Table.HeaderCell>
+                                <Table.HeaderCell>Edit</Table.HeaderCell>
+                                <Table.HeaderCell>Delete</Table.HeaderCell>
                             </Table.Row>
-                        )}
+                        </Table.Header>
 
-                    </Table.Body>
 
-                    <Table.Footer>
-                        <Table.Row>
-                            <Table.HeaderCell colSpan='6'>
+                        <Table.Body>
 
-                            </Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Footer>
+                            {currentItems.map((c) =>
+                                <Table.Row key={c.id}>
+                                    <Table.Cell>{c.id}</Table.Cell>
+                                    <Table.Cell>{c.name}</Table.Cell>
+                                    <Table.Cell>{c.address}</Table.Cell>
+                                    <Table.Cell><EditCustomer id={c.id} name={c.name} address={c.address} fetchData={this.fetchData.bind(this)} /> </Table.Cell>
+                                    <Table.Cell><DeleteCustomer id={c.id} name={c.name} address={c.address} fetchData={this.fetchData.bind(this)} /></Table.Cell>
+                                </Table.Row>
+                            )}
 
-                </Table >
-        <Menu floated='right' pagination>
-            <Menu.Item as='a' icon>
-                <Icon name='chevron left' />
-            </Menu.Item>
-            <Menu.Item as='a'>1</Menu.Item>
-            <Menu.Item as='a'>2</Menu.Item>
-            <Menu.Item as='a'>3</Menu.Item>
-            <Menu.Item as='a'>4</Menu.Item>
-            <Menu.Item as='a' icon>
-                <Icon name='chevron right' />
-            </Menu.Item>
-        </Menu>
-        </div >
-          
+                        </Table.Body>
+
+                        <Table.Footer >
+
+
+
+                        </Table.Footer>
+
+
+                    </Table >
+                   
+                    <Pagination
+                        floated="right"
+                        boundaryRange={0}
+                        defaultActivePage={1}
+                        totalPages={numberOfPages}
+                        onPageChange={(e, data) => this.setState({ value: data.activePage })}
+                        siblingRange={1}
+                        pointing
+                        secondary
+
+
+                    />
+
+                  
+
+                </div> : this.setState({ value: 1 });
+
+
+                 
         return (
             <div>
-                {console.log(true)}
-                
+               
                 {contents}
+
+                
             </div>
         );
 

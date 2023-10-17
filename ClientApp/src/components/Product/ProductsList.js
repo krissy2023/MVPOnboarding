@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Icon, Menu, Table } from 'semantic-ui-react';
+import {  Table, Pagination } from 'semantic-ui-react';
 import { CreateProduct } from "./CreateProduct";
 import { EditProduct } from "./EditProduct";
 import { DeleteProduct } from "./DeleteProduct";
@@ -9,7 +9,13 @@ import { DeleteProduct } from "./DeleteProduct";
 export class ProductsList extends Component {
     constructor(props) {
         super(props);
-        this.state = {products: [], loading: true}
+        this.state = {
+            products: [],
+            loading: true,
+            value: 1,
+           
+
+        }
 
 
 
@@ -24,13 +30,27 @@ export class ProductsList extends Component {
     fetchData() {
         this.populateProductsData();
     }
-    
 
+    handleClick(e) {
+        this.setState({value: 1})
+    }
 
     render() {
         const products = this.state.products;
+        const itemsPerPage = 10;
+        var indexOfLastItem = this.state.value * itemsPerPage;
+        var indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        var currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+        const totalItems = products.length;
+        const numberOfPages = Math.ceil(totalItems / itemsPerPage);
+       
+       
         let contents =
             this.state.loading ? <p><em>Loading...</em> </p> : 
+
+                currentItems.length !== 0 || this.state.value === 1 ?
+
+
                 <div>
                     <CreateProduct fetchData={this.fetchData.bind(this)} />
                     <Table celled>
@@ -46,7 +66,7 @@ export class ProductsList extends Component {
                         </Table.Header>
 
                         <Table.Body>
-                            {products.map((p) =>
+                            {currentItems.map((p) =>
                                 <Table.Row key={p.id}>
                                     <Table.Cell>{p.id}</Table.Cell>
                                     <Table.Cell>{p.name}</Table.Cell>
@@ -67,27 +87,32 @@ export class ProductsList extends Component {
                         </Table.Footer>
 
                     </Table>
-                    <Menu floated='right' pagination>
-                        <Menu.Item as='a' icon>
-                            <Icon name='chevron left' />
-                        </Menu.Item>
-                        <Menu.Item as='a'>1</Menu.Item>
-                        <Menu.Item as='a'>2</Menu.Item>
-                        <Menu.Item as='a'>3</Menu.Item>
-                        <Menu.Item as='a'>4</Menu.Item>
-                        <Menu.Item as='a' icon>
-                            <Icon name='chevron right' />
-                        </Menu.Item>
-                    </Menu>
+                    <Pagination
+                        floated="right"
+                        boundaryRange={0}
+                        defaultActivePage={1}
+                        totalPages={numberOfPages}
+                        onPageChange={(e, data) => this.setState({ value: data.activePage })}
+                        siblingRange={1}
+                        pointing
+                        secondary
+                        
+                        
+                    />
 
-                </div>
+                       
+                   
+
+
+                 
+               </div> : this.setState({ value: 1 });
 
 
         return (
             <div>
 
                 <h1> Products List</h1>
-                {console.log(true)}
+               
                 
                 {contents}
             </div>

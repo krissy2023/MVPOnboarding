@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Icon, Menu, Table } from 'semantic-ui-react'
+import { Table, Pagination } from 'semantic-ui-react'
 import { CreateSale } from './CreateSale'
 import {EditSale } from './EditSale'
 import {DeleteSale } from './DeleteSale'
@@ -7,7 +7,7 @@ import {DeleteSale } from './DeleteSale'
 export class SalesList extends Component {
     constructor() {
         super();
-        this.state = { sales: [], loading: true }
+        this.state = { sales: [], loading: true, value: 1 }
 
        
 
@@ -16,20 +16,30 @@ export class SalesList extends Component {
    
     componentDidMount() {
         this.populateSalesData();
-        console.log("data mounted");
+       
     }
 
     fetchData() {
         this.populateSalesData();
-        console.log("data fetched");
+       
     }
 
 
   render() {
-            const sales = this.state.sales;
-      console.log("data rendered");
-    let contents =
-                this.state.loading ? <p><em>Loading...</em> </p> : <div>
+      const sales = this.state.sales;
+      const itemsPerPage = 10;
+      var indexOfLastItem = this.state.value * itemsPerPage;
+      var indexOfFirstItem = indexOfLastItem - itemsPerPage;
+      var currentItems = sales.slice(indexOfFirstItem, indexOfLastItem);
+      const totalItems = sales.length;
+      const numberOfPages = Math.ceil(totalItems / itemsPerPage);
+     
+
+      let contents =
+          this.state.loading ? <p><em>Loading...</em> </p> :
+
+              currentItems.length !== 0 || this.state.value === 1 ?
+
                     <div>
                      <CreateSale fetchData={this.fetchData.bind(this)} />
                         <Table celled>
@@ -44,8 +54,8 @@ export class SalesList extends Component {
                                 </Table.Row>
                             </Table.Header>
 
-                            <Table.Body>
-                                {sales.map((
+                      <Table.Body>
+                          {currentItems.map((
                                     sale
                                 ) =>
                                     <Table.Row key={sale.id}>
@@ -92,30 +102,24 @@ export class SalesList extends Component {
                             </Table.Footer>
 
                         </Table>
-                        <Menu floated='right' pagination>
-                            <Menu.Item as='a' icon>
-                                <Icon name='chevron left' />
-                            </Menu.Item>
-                            <Menu.Item as='a'>1</Menu.Item>
-                            <Menu.Item as='a'>2</Menu.Item>
-                            <Menu.Item as='a'>3</Menu.Item>
-                            <Menu.Item as='a'>4</Menu.Item>
-                            <Menu.Item as='a' icon>
-                                <Icon name='chevron right' />
-                            </Menu.Item>
-                        </Menu>
-
-                    </div>
+                  <Pagination
+                      floated="right"
+                      boundaryRange={0}
+                      defaultActivePage={1}
+                      totalPages={numberOfPages}
+                      onPageChange={(e, data) => this.setState({ value: data.activePage })}
+                      siblingRange={1}
+                      pointing
+                      secondary
 
 
+                  />
 
+                  </div> : this.setState({ value: 1 });
 
-
-
-                </div>
             return (
                 <div>
-                    {console.log("data returned")}
+                   
                     <h1> Sales List</h1>
                     {contents}
                 </div>

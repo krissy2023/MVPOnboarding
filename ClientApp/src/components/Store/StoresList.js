@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Icon, Menu, Table } from 'semantic-ui-react';
+import { Table, Pagination } from 'semantic-ui-react';
 import { CreateStore } from "./CreateStore";
 import { EditStore } from "./EditStore";
 import { DeleteStore } from "./DeleteStore";
@@ -9,7 +9,7 @@ import { DeleteStore } from "./DeleteStore";
 export class StoresList extends Component {
     constructor(props) {
         super(props);
-        this.state = { stores: [], loading: true }
+        this.state = { stores: [], loading: true, value: 1 }
 
 
 
@@ -33,8 +33,21 @@ export class StoresList extends Component {
 
     render() {
         const stores = this.state.stores;
+        const itemsPerPage = 10;
+        var indexOfLastItem = this.state.value * itemsPerPage;
+        var indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        var currentItems = stores.slice(indexOfFirstItem, indexOfLastItem);
+        const totalItems = stores.length;
+        const numberOfPages = Math.ceil(totalItems / itemsPerPage);
+
+
         let contents =
-            this.state.loading ? <p><em>Loading...</em> </p> : <div>
+            this.state.loading ? <p><em>Loading...</em> </p> :
+
+                currentItems.length !== 0 || this.state.value === 1 ?
+
+
+                 <div>
 
 
                 <CreateStore fetchdata={this.fetchData.bind(this)} />
@@ -51,7 +64,7 @@ export class StoresList extends Component {
                     </Table.Header>
 
                     <Table.Body>
-                        {stores.map((s) =>
+                        {currentItems.map((s) =>
                             <Table.Row key={s.id}>
                                 <Table.Cell>{s.id}</Table.Cell>
                                 <Table.Cell>{s.name}</Table.Cell>
@@ -72,24 +85,21 @@ export class StoresList extends Component {
                     </Table.Footer>
 
                 </Table>
-                <Menu floated='right' pagination>
-                    <Menu.Item as='a' icon>
-                        <Icon name='chevron left' />
-                    </Menu.Item>
-                    <Menu.Item as='a'>1</Menu.Item>
-                    <Menu.Item as='a'>2</Menu.Item>
-                    <Menu.Item as='a'>3</Menu.Item>
-                    <Menu.Item as='a'>4</Menu.Item>
-                    <Menu.Item as='a' icon>
-                        <Icon name='chevron right' />
-                    </Menu.Item>
-                </Menu>
+                <Pagination
+                    floated="right"
+                    boundaryRange={0}
+                    defaultActivePage={1}
+                    totalPages={numberOfPages}
+                    onPageChange={(e, data) => this.setState({ value: data.activePage })}
+                    siblingRange={1}
+                    pointing
+                    secondary
 
 
+                />
 
+                    </div> : this.setState({ value: 1 });
 
-
-            </div>
         return (
             <div>
                 <h1> Stores List</h1>

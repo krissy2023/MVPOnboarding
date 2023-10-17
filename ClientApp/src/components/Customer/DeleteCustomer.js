@@ -58,7 +58,9 @@ export class DeleteCustomer extends Component {
             
         })
         this.props.fetchData();
+
         this.closeModal();
+       
 
 
     }
