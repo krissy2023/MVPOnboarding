@@ -87,7 +87,11 @@ export class CustomersList extends Component {
                         </Table.Body>
 
                         <Table.Footer >
+                            <Table.Row>
+                                <Table.HeaderCell colSpan='6'>
 
+                                </Table.HeaderCell>
+                            </Table.Row>
 
 
                         </Table.Footer>
