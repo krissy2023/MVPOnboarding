@@ -11,10 +11,7 @@ export class StoresList extends Component {
         super(props);
         this.state = { stores: [], loading: true, value: 1 }
 
-
-
     }
-
 
     componentDidMount() {
         this.populateStoresData();
@@ -29,9 +26,11 @@ export class StoresList extends Component {
         this.populateStoresData();
     }
 
-       
 
     render() {
+
+        //Pagination 
+
         const stores = this.state.stores;
         const itemsPerPage = 10;
         var indexOfLastItem = this.state.value * itemsPerPage;
@@ -69,8 +68,8 @@ export class StoresList extends Component {
                                 <Table.Cell>{s.id}</Table.Cell>
                                 <Table.Cell>{s.name}</Table.Cell>
                                 <Table.Cell>{s.address}</Table.Cell>
-                                <Table.Cell><EditStore id={s.id} name={s.name} address={s.address} fetchdata={this.fetchData.bind(this)} /> </Table.Cell>
-                                <Table.Cell><DeleteStore id={s.id} name={s.name} address={s.address} fetchdata={this.fetchData.bind(this)} /></Table.Cell>
+                                <Table.Cell><EditStore id={s.id} name={s.name} address={s.address} fetchData={this.fetchData.bind(this)} /> </Table.Cell>
+                                <Table.Cell><DeleteStore id={s.id} name={s.name} address={s.address} fetchData={this.fetchData.bind(this)} /></Table.Cell>
                             </Table.Row>
                         )}
 
@@ -102,7 +101,6 @@ export class StoresList extends Component {
 
         return (
             <div>
-
                 <Header size="large" color="blue"> Stores List </Header>
                 {contents}
             </div>
@@ -112,7 +110,6 @@ export class StoresList extends Component {
     async populateStoresData() {
         const response = await fetch('/api/Stores');
         const data = await response.json();
-
         this.setState({ stores: data, loading: false });
     }
 

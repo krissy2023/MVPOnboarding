@@ -39,6 +39,9 @@ export class CustomersList extends Component {
 
    
     render() {
+
+        //for pagination
+
         const customers = this.state.customers;
         const itemsPerPage = 10;
         var indexOfLastItem = this.state.value * itemsPerPage;
@@ -47,6 +50,7 @@ export class CustomersList extends Component {
         const totalItems = customers.length;
         const numberOfPages = Math.ceil(totalItems / itemsPerPage);
        
+
         let contents = this.state.loading ?
             <p> <em>Loading...</em> </p> :
 
@@ -121,10 +125,12 @@ export class CustomersList extends Component {
 
     }
     async populateCustomersData() {
-        const response = await fetch('/api/Customers');
-        const data = await response.json();
-
-        this.setState({ customers: data, loading: false });
+        
+            const response = await fetch('/api/Customers');
+            const data = await response.json();
+            this.setState({ customers: data, loading: false });
+       
+       
     }
 
     

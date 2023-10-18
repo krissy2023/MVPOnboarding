@@ -24,7 +24,6 @@ export class CreateSale extends Component {
         }
 
         this.changeCustomerHandler = this.changeCustomerHandler.bind(this);
-        
         this.changeProductHandler = this.changeProductHandler.bind(this);
         this.changeStoreHandler = this.changeStoreHandler.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -98,11 +97,6 @@ export class CreateSale extends Component {
         const customers = this.state.customers;
         const products = this.state.products;
         const stores = this.state.stores;
-
-        
-        
-
-       
        
         return (
 
@@ -116,8 +110,6 @@ export class CreateSale extends Component {
         >
             
                 <h3> Create New Sale </h3>
-
-            
 
             <Form id="form-data" onSubmit={this.handleSubmit} >
                     <Form.Field
@@ -188,7 +180,6 @@ export class CreateSale extends Component {
     async getStoresData() {
         const response = await fetch('/api/Stores');
         const data = await response.json();
-      
         this.setState({ stores: data });
 
 

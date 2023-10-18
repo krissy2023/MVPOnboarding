@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace MVPOnboarding.Models;
 
 public partial class Customer

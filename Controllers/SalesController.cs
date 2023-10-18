@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVPOnboarding.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace MVPOnboarding.Controllers
 {
@@ -70,7 +65,8 @@ namespace MVPOnboarding.Controllers
 
             try
             {
-                await _context.SaveChangesAsync();
+				sale.DateSold = DateTime.Now;
+				await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {

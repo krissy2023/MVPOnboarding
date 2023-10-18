@@ -13,10 +13,7 @@ export class ProductsList extends Component {
             products: [],
             loading: true,
             value: 1,
-           
-
-        }
-
+         }
 
 
     }
@@ -36,6 +33,9 @@ export class ProductsList extends Component {
     }
 
     render() {
+
+        //Pagination 
+
         const products = this.state.products;
         const itemsPerPage = 10;
         var indexOfLastItem = this.state.value * itemsPerPage;

@@ -1,10 +1,5 @@
 ﻿import React, { Component } from "react";
-import { Button, Header, Modal, Form, Icon} from 'semantic-ui-react'
-
-
-
-
-
+import { Button, Modal, Form, Icon} from 'semantic-ui-react'
 
 export class DeleteSale extends Component {
     constructor(props) {
@@ -15,14 +10,10 @@ export class DeleteSale extends Component {
             customerName: props.customerName,
             productName: props.productName,
             storeName: props.storeName,
-            
             id: props.id,
             isModalOpen: false,
 
-
-
         }
-
        
         this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -36,24 +27,17 @@ export class DeleteSale extends Component {
         this.setState({ isModalOpen: false })
     }
 
-    
 
     async handleSubmit(event) {
         event.preventDefault();
 
          await fetch(`/api/Sales/ ${this.state.id}`, {
             method: 'DELETE'
-           
-        })
-
+         })
 
         this.props.fetchData();
         this.closeModal();
     }
-
-
-
-   
 
     render() {
 
@@ -69,9 +53,7 @@ export class DeleteSale extends Component {
                 className='modal'
             >
                
-                <h3>  Delete Sale </h3>
-
-                
+                <h3>Delete Sale </h3>
 
                 <Form id="form-data" onSubmit={this.handleSubmit} >
                    <Form.Field>
@@ -100,10 +82,6 @@ export class DeleteSale extends Component {
 
         );
     }
-
-   
-
-
 
 }
 

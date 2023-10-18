@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Button, Header, Modal, Form, Icon } from 'semantic-ui-react'
+import { Button, Modal, Form, Icon } from 'semantic-ui-react'
 
 
 
@@ -14,6 +14,7 @@ export class EditStore extends Component {
             address: props.address,
             isModalOpen: false
         }
+
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChangeAddress = this.handleChangeAddress.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,8 +44,6 @@ export class EditStore extends Component {
         });
     }
 
-
-
     async handleSubmit(event) {
         event.preventDefault();
         event.target.reset();
@@ -63,8 +62,6 @@ export class EditStore extends Component {
         this.props.fetchData();
         this.closeModal();
     }
-
-
 
     render() {
        
@@ -99,8 +96,6 @@ export class EditStore extends Component {
                     
 
                 </Form>
-
-
 
             </Modal>
 

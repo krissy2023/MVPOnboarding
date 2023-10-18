@@ -63,11 +63,7 @@ export class CreateStore extends Component {
         this.closeModal();
     }
 
-
-
     render() {
-
-
 
         return (
             <Modal
@@ -98,11 +94,7 @@ export class CreateStore extends Component {
                         <Icon name='remove' /> Cancel
                     </Button>
                    
-
-
                 </Form>
-
-
 
             </Modal>
 

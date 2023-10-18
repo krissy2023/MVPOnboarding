@@ -1,10 +1,5 @@
 ﻿import React, { Component } from "react";
-import { Button, Header, Modal, Form, Icon, Input, Dropdown, Select } from 'semantic-ui-react'
-
-
-
-
-
+import { Button, Modal, Form, Icon, Select } from 'semantic-ui-react'
 
 export class EditSale extends Component {
     constructor(props) {
@@ -22,8 +17,6 @@ export class EditSale extends Component {
             storeId: props.storeId,
             id: props.id,
             isModalOpen: false,
-
-
 
         }
 
@@ -64,7 +57,6 @@ export class EditSale extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-
         const response = await fetch(`/api/Sales/ ${this.state.id}`,{
             method: 'PUT',
             headers: {
@@ -84,12 +76,9 @@ export class EditSale extends Component {
             )
         })
 
-        
         this.props.fetchData();
         this.closeModal();
     }
-
-
 
     componentDidMount() {
         this.getCustomersData();
@@ -107,8 +96,6 @@ export class EditSale extends Component {
         const pName = this.state.productName;
 
        
-
-
 
         return (
 
@@ -200,7 +187,6 @@ export class EditSale extends Component {
 
 
     }
-
 
 
 }

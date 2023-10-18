@@ -9,11 +9,8 @@ export class SalesList extends Component {
         super();
         this.state = { sales: [], loading: true, value: 1 }
 
-       
-
     }
 
-   
     componentDidMount() {
         this.populateSalesData();
        
@@ -25,7 +22,10 @@ export class SalesList extends Component {
     }
 
 
-  render() {
+    render() {
+
+        //Pagination 
+
       const sales = this.state.sales;
       const itemsPerPage = 10;
       var indexOfLastItem = this.state.value * itemsPerPage;
@@ -86,8 +86,6 @@ export class SalesList extends Component {
                                         /></Table.Cell>
                                     </Table.Row>
 
-
-
                                 )
                                 }
 
@@ -129,7 +127,6 @@ export class SalesList extends Component {
     async populateSalesData() {
         const response = await fetch('/api/Sales');
         const data = await response.json();
-        
         this.setState({ sales: data, loading: false });
     }
 }

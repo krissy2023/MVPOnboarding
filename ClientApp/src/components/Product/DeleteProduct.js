@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Button, Header, Modal, Form, Icon } from 'semantic-ui-react'
+import { Button, Message, Modal, Form, Icon } from 'semantic-ui-react'
 
 
 
@@ -12,7 +12,9 @@ export class DeleteProduct extends Component {
             id: props.id,
             name: props.name,
             price: props.price,
-            isModalOpen: false
+            isModalOpen: false,
+            isError: false,
+            error: ""
         }
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChangePrice = this.handleChangePrice.bind(this);
@@ -47,20 +49,24 @@ export class DeleteProduct extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         event.target.reset();
+        try {
+            const response = await fetch('/api/Products/' + `${this.state.id}`, {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    id: this.state.id,
+                    name: this.state.name,
+                    price: this.state.price
+                })
 
-        const response = await fetch('/api/Products/' + `${this.state.id}`, {
-            method: 'DELETE',
-            body: JSON.stringify({
-                id: this.state.id,
-                name: this.state.name,
-                price: this.state.price
             })
+            if (response.status === 500) throw new Error("This customer has a sale record. Unable to delete.");
+            this.props.fetchData();
+            this.closeModal();
+        } catch (error) {
 
-        })
-        this.props.fetchData();
-        this.closeModal();
-
-
+            this.setState({ error: error.message, isError: true });
+            setTimeout(() => this.setState({ isError: false }), 3000);
+        }
     }
 
     render() {
@@ -77,7 +83,7 @@ export class DeleteProduct extends Component {
             >
                 <h3> Delete Product </h3>
 
-                <Form onSubmit={this.handleSubmit}>
+                <Form error onSubmit={this.handleSubmit}>
                    <Form.Field>
                     <label>Name</label>
                         <input type='text' value={name} readOnly />
@@ -86,6 +92,8 @@ export class DeleteProduct extends Component {
                     <label>Price</label>
                     <input type='text' value={price} readOnly />
                     </Form.Field>
+
+                    {this.state.isError === true ? <Message error size="tiny"> {this.state.error}</Message> : null}
                    
                     <Button floated="right" inverted color='green' type='submit' value='submit' >
                         <Icon name='checkmark' /> Delete </Button>
